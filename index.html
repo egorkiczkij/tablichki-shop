@@ -141,8 +141,9 @@
   .sheet .hero-img img { width: 100%; height: 100%; object-fit: cover; }
   .sheet .hero-img .art { transform: scale(1.5); }                       /* нарисованные таблички крупнее */
   .sheet .hero-img img.cut { padding: 5%; object-fit: contain; }
-  .sheet .hero-img.full { aspect-ratio: auto; background: #0d0a0b; }      /* живые фото целиком, без обрезки */
-  .sheet .hero-img.full img { height: auto; max-height: 64vh; object-fit: contain; }
+  .sheet .hero-img.full { aspect-ratio: auto; }                           /* фото целиком, без обрезки, по своей высоте */
+  .sheet .hero-img.full.live { background: #0d0a0b; }
+  .sheet .hero-img.full img { height: auto; max-height: 62vh; object-fit: contain; }
   .sheet .content { padding: 16px; max-width: 760px; margin: 0 auto; }
   .sheet h3 { font: 600 21px/1.2 var(--head); margin: 0 0 6px; }
   .sheet .desc { color: var(--muted); margin: 0 0 14px; }
@@ -437,7 +438,8 @@ function openSheet(it) {
   cur = it; haptic("medium");
   const himg = document.getElementById("s-img");
   himg.innerHTML = visual(it);
-  himg.classList.toggle("full", !!(it.photo && !it.cut));
+  himg.classList.toggle("full", !!it.photo);
+  himg.classList.toggle("live", !!(it.photo && !it.cut));
   document.getElementById("s-name").textContent = it.name;
   document.getElementById("s-desc").textContent = it.desc;
   document.getElementById("s-sizes-wrap").hidden = !it.sizes.length;
