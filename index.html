@@ -42,8 +42,8 @@
   .hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--gold2), var(--gold) 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero p { position: relative; margin: 0; color: var(--muted); max-width: 520px; }
   .stats { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
-  .stat { border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); border-radius: 16px; padding: 12px; }
-  .stat b { display: block; font: 600 20px var(--head); color: var(--gold2); }
+  .stat { min-width: 0; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); border-radius: 16px; padding: 12px; }
+  .stat b { display: block; font: 600 clamp(15px, 4.6vw, 20px) var(--head); color: var(--gold2); white-space: nowrap; }
   .stat span { font-size: 12px; color: var(--muted); }
 
   /* Tabs */
