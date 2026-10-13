@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Адресные, офисные, тактильные таблички и знаки безопасности. Свой цех в Омске, доставка по России. Выберите табличку и напишите нам в Телеграм.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Таблички, которые выглядят дорого · Автодорфлот">
+<meta property="og:description" content="Свой цех в Омске, 35 лет. От 300 ₽, от 1 шт, доставка по России.">
+<meta property="og:image" content="https://egorkiczkij.github.io/tablichki-shop/img/og.jpg">
+<meta name="theme-color" content="#0a0708">
+<title>Автодорфлот · Таблички</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0708; --bg2: #131110; --card: #171514; --line: rgba(255,255,255,.08);
+    --text: #f3eee9; --muted: #9d958e; --accent: #d9475f; --accent2: #f28a9b;
+    --wine: #7d1529; --wine2: #b3263f; --gold: #d8b46a; --gold2: #f3dca4;
+    --head: "Unbounded", system-ui, sans-serif; --body: "Manrope", system-ui, sans-serif;
+    --r: 22px; --ease: cubic-bezier(.2,.8,.2,1);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 var(--body); overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 120px; }
+
+  /* Hero */
+  .hero { position: relative; padding: 34px 0 26px; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: -40% -30% auto; height: 420px;
+    background: radial-gradient(closest-side, rgba(190,35,70,.45), transparent 70%); filter: blur(10px);
+    animation: breathe 7s ease-in-out infinite; pointer-events: none; }
+  .hero::after { content: ""; position: absolute; right: -60px; top: 40px; width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(216,180,106,.22), transparent 70%); animation: breathe 9s ease-in-out infinite reverse; pointer-events: none; }
+  @keyframes breathe { 50% { transform: scale(1.12) translateY(8px); opacity: .8; } }
+  .eyebrow { position: relative; display: inline-flex; gap: 8px; align-items: center; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold2); }
+  .eyebrow i { width: 26px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .hero h1 { position: relative; font: 600 clamp(28px, 8vw, 44px)/1.08 var(--head); margin: 14px 0 12px; letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--gold2), var(--gold) 40%, var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { position: relative; margin: 0; color: var(--muted); max-width: 520px; }
+  .stats { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
+  .stat { border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); border-radius: 16px; padding: 12px; }
+  .stat b { display: block; font: 600 20px var(--head); color: var(--gold2); }
+  .stat span { font-size: 12px; color: var(--muted); }
+
+  /* Tabs */
+  .tabs { position: sticky; top: 0; z-index: 5; margin: 6px -16px 0; padding: 12px 16px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+    background: linear-gradient(180deg, var(--bg) 70%, rgba(10,7,8,0)); backdrop-filter: blur(6px); }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 9px 15px; font-size: 13.5px; font-weight: 600; color: var(--muted);
+    transition: all .35s var(--ease); }
+  .tab.on { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--wine2), var(--accent)); box-shadow: 0 8px 24px -10px var(--accent); }
+
+  /* Cards */
+  .section-title { display: flex; align-items: baseline; justify-content: space-between; margin: 26px 0 12px; }
+  .section-title h2 { font: 600 18px var(--head); margin: 0; }
+  .section-title span { color: var(--muted); font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (min-width: 620px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .card { position: relative; border-radius: var(--r); background: var(--card); border: 1px solid var(--line); overflow: hidden; text-align: left; padding: 0;
+    opacity: 0; transform: translateY(18px) scale(.98); transition: opacity .6s var(--ease), transform .6s var(--ease), border-color .3s; }
+  .card.in { opacity: 1; transform: none; }
+  .card:active { transform: scale(.97); }
+  .card .ph { aspect-ratio: 1 / 1; position: relative; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, #2a1a1d, #120d0e); }
+  .card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .card:hover .ph img { transform: scale(1.06); }
+  .card .ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10,7,8,.85)); }
+  .tag { position: absolute; z-index: 1; top: 10px; left: 10px; font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 4px 9px; border-radius: 999px;
+    background: rgba(10,7,8,.6); border: 1px solid rgba(243,220,164,.35); color: var(--gold2); backdrop-filter: blur(6px); }
+  .card .info { padding: 11px 12px 13px; }
+  .card .name { font-weight: 700; font-size: 14px; line-height: 1.3; }
+  .card .sub { margin-top: 3px; font-size: 12px; color: var(--muted); }
+  .card .price { margin-top: 8px; font-weight: 700; font-size: 13px; color: var(--gold2); }
+
+  .ph img.cut, .hero-img img.cut { object-fit: contain; padding: 9%; filter: drop-shadow(0 16px 22px rgba(0,0,0,.75)); }
+  .art { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .card .ph .art { transition: transform 1.2s var(--ease); }
+  .card:hover .ph .art { transform: scale(1.05); }
+  /* Plate placeholder (когда нет фото) */
+  .plate { position: absolute; inset: 18% 12%; border-radius: 10px; display: grid; place-items: center; text-align: center; padding: 8px;
+    font: 600 clamp(11px, 3.2vw, 15px)/1.2 var(--head); box-shadow: 0 18px 40px -18px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.25); }
+  .plate.gold { background: linear-gradient(135deg, #f3dca4, #b8913f 55%, #f0d690); color: #2a1d08; }
+  .plate.silver { background: linear-gradient(135deg, #f4f4f4, #9ea3a8 55%, #e6e8ea); color: #1d2024; }
+  .plate.blue { background: linear-gradient(135deg, #2d6fd6, #16438f); color: #fff; }
+  .plate.red { background: #fff; color: #c22a2a; border: 5px solid #c22a2a; }
+  .plate.green { background: linear-gradient(135deg, #2bb36a, #157a43); color: #fff; }
+  .plate.yellow { background: linear-gradient(135deg, #ffd34d, #e2a900); color: #222; }
+  .plate::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%);
+    background-size: 250% 100%; animation: shine 4.5s ease-in-out infinite; }
+  @keyframes shine { 0%, 60% { background-position: 130% 0; } 100% { background-position: -130% 0; } }
+
+  /* Custom CTA */
+  .cta { margin-top: 28px; border-radius: var(--r); padding: 20px; position: relative; overflow: hidden; border: 1px solid rgba(243,220,164,.25);
+    background: radial-gradient(120% 140% at 0% 0%, rgba(179,38,63,.45), transparent 60%), var(--bg2); }
+  .cta h3 { font: 600 18px var(--head); margin: 0 0 6px; }
+  .cta p { margin: 0 0 14px; color: var(--muted); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 14px; padding: 13px 18px; font-weight: 700;
+    background: linear-gradient(135deg, var(--wine2), var(--accent)); color: #fff; box-shadow: 0 12px 30px -12px var(--accent); transition: transform .2s; }
+  .btn:active { transform: scale(.97); }
+  .btn.gold { background: linear-gradient(135deg, var(--gold2), var(--gold)); color: #241a07; box-shadow: 0 12px 30px -14px var(--gold); }
+  .why { display: grid; gap: 10px; margin-top: 26px; }
+  .why div { border: 1px solid var(--line); border-radius: 16px; padding: 14px; background: var(--card); }
+  .why b { font-family: var(--head); font-weight: 600; font-size: 14px; }
+  .why p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: 12px; }
+
+  /* Sheet */
+  .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.6); opacity: 0; pointer-events: none; transition: opacity .35s; z-index: 20; }
+  .scrim.on { opacity: 1; pointer-events: auto; }
+  .sheet { position: fixed; z-index: 21; left: 0; right: 0; bottom: 0; max-height: 92vh; overflow-y: auto; background: var(--bg2); border-radius: 26px 26px 0 0;
+    border-top: 1px solid rgba(243,220,164,.2); transform: translateY(105%); transition: transform .5s var(--ease); padding-bottom: env(safe-area-inset-bottom); }
+  .sheet.on { transform: none; }
+  .sheet .grab { width: 44px; height: 5px; border-radius: 9px; background: rgba(255,255,255,.2); margin: 10px auto 0; }
+  .sheet .hero-img { position: relative; margin: 12px 16px 0; border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 10; background: radial-gradient(120% 90% at 30% 20%, #2a1a1d, #120d0e); }
+  .sheet .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sheet .content { padding: 16px; max-width: 760px; margin: 0 auto; }
+  .sheet h3 { font: 600 21px/1.2 var(--head); margin: 0 0 6px; }
+  .sheet .desc { color: var(--muted); margin: 0 0 14px; }
+  .label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 9px 13px; font-size: 13.5px; font-weight: 600; transition: all .25s var(--ease); }
+  .chip.on { border-color: var(--gold); color: var(--gold2); background: rgba(216,180,106,.1); }
+  .field { width: 100%; margin-top: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 12px; padding: 12px 13px; font: inherit; }
+  .field:focus { outline: none; border-color: var(--gold); }
+  textarea.field { min-height: 84px; resize: vertical; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .send { width: 100%; margin-top: 18px; }
+  .note { text-align: center; color: var(--muted); font-size: 12px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow"><i></i>Автодорфлот · Омск</div>
+    <h1>Таблички, которые <em>выглядят дорого</em></h1>
+    <p>Свой цех: печатаем, режем и красим сами. Выберите табличку, напишите нам, и мы подготовим макет под вашу задачу.</p>
+    <div class="stats">
+      <div class="stat"><b>35</b><span>лет на рынке</span></div>
+      <div class="stat"><b>от 300 ₽</b><span>цена таблички</span></div>
+      <div class="stat"><b>от 1 шт</b><span>доставка по РФ</span></div>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs"></nav>
+  <main id="list"></main>
+
+  <section class="cta">
+    <h3>Нужно что-то своё?</h3>
+    <p>Нестандартный размер, фигурный стенд, табличка по вашему фото или макету. Опишите задачу, предложим решение.</p>
+    <button class="btn gold" onclick="openSheet(CUSTOM)">Обсудить задачу</button>
+  </section>
+
+  <section class="why">
+    <div><b>Всё в одном цеху</b><p>УФ-печать, резка плёнки, металл и порошковая окраска. Не ждём подрядчиков и отвечаем за качество.</p></div>
+    <div><b>Макет бесплатно</b><p>Поможем с текстом и размером, согласуем макет до запуска в работу.</p></div>
+    <div><b>Работаем с организациями</b><p>Счёт, договор, закрывающие документы. Госзаказчики, УК, школы, поликлиники.</p></div>
+  </section>
+  <footer>ООО «Автодор флот» · Омск · Отвечаем в рабочее время 8:00–17:00 (Омск)</footer>
+</div>
+
+<div class="scrim" id="scrim" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="grab"></div>
+  <div class="hero-img" id="s-img"></div>
+  <div class="content">
+    <h3 id="s-name"></h3>
+    <p class="desc" id="s-desc"></p>
+    <div id="s-sizes-wrap"><div class="label">Размер</div><div class="chips" id="s-sizes"></div></div>
+    <div id="s-mat-wrap"><div class="label">Материал</div><div class="chips" id="s-mats"></div></div>
+    <div class="label">Текст на табличке</div>
+    <textarea class="field" id="s-text" placeholder="Например: ул. Мира, 12"></textarea>
+    <div class="two">
+      <input class="field" id="s-qty" type="number" min="1" value="1" placeholder="Количество">
+      <input class="field" id="s-city" placeholder="Город">
+    </div>
+    <input class="field" id="s-note" placeholder="Комментарий: цвет, крепление, сроки">
+    <button class="btn send" id="s-send" onclick="sendOrder()">Написать в Telegram</button>
+    <div class="note">Цена от 300 ₽, точную рассчитаем по вашему макету. Откроется чат с нами, сообщение уже заполнено.</div>
+  </div>
+</div>
+
+<script>
+/* ===== Настройки ===== */
+const CONFIG = {
+  manager: "egor_autodorflot",                                  // ник в Телеграме без @, сюда приходят заявки
+  img: "https://autodorflot.ru/tablichki/img/",          // фото работ с нашего сайта
+};
+const MATS = ["Металл", "Композит", "Пластик ПВХ", "Акрил", "Под золото / серебро"];
+const STREET = ["Металл", "Композит"];
+
+/* ===== Каталог =====
+   photo: файл фото из CONFIG.img, plate: цвет заглушки и надпись, price: «от» в рублях или null */
+const CATALOG = [
+  { cat: "Адресные", items: [
+    { name: "Фасадные и адресные таблички", sub: "Стекло, металл, световозвращающие", tag: "Хит", photo: "img/adresnaya-studio-cut.webp", cut: true,
+      desc: "Номер дома видно ночью в свете фар. Металл с порошковой окраской или композит, не боится солнца и мороза.", sizes: ["500×250", "600×300", "700×350", "Свой"], mats: STREET, price: 300 },
+    { name: "Фигурные адресные таблички", sub: "Классика с фигурным низом", tag: "Наши работы", photo: "img/adres-figurnye.webp", cut: true,
+      desc: "Адресные таблички фигурной формы: улица и номер дома, белые буквы на синем. Вырезаем по контуру в своём цеху.", sizes: ["600×250", "700×300", "900×350", "Свой"], mats: STREET, price: 300 },
+    { name: "Адресные с номером корпуса", sub: "Улица, дом, корпус", photo: "img/adres-korpus.webp", cut: true,
+      desc: "Табличка с выделенным блоком для номера дома и корпуса. Серия на весь комплекс в одном стиле.", sizes: ["600×300", "700×350", "Свой"], mats: STREET, price: 300 },
+    { name: "Номер дома крупно", sub: "Отдельный номер на фасад", art: "number",
+      desc: "Крупный номер для фасада или забора, хорошо читается издалека.", sizes: ["300×300", "400×400", "Свой"], mats: STREET, price: 300 },
+    { name: "Таблички подъездов", sub: "С номерами квартир", art: "entrance",
+      desc: "Подъезды с диапазоном квартир для УК и ТСЖ. Серия в едином стиле на весь дом.", sizes: ["400×200", "500×250", "Свой"], mats: STREET, price: 300 },
+    { name: "Номерки на квартиры", sub: "Комплект на подъезд", art: "apt",
+      desc: "Номерки на двери под золото, серебро или в цвет подъезда.", sizes: ["100×100", "150×100", "Свой"], mats: MATS, price: 300 },
+  ]},
+  { cat: "Дизайнерские", items: [
+    { name: "Акрил на держателях", sub: "Стекло-эффект, парит над стеной", tag: "Тренд", art: "acrylic",
+      desc: "Прозрачный или цветной акрил на металлических дистанционных держателях. Выглядит как стекло, подходит для ресепшен и входа.", sizes: ["300×200", "400×300", "600×400", "Свой"], mats: ["Акрил"], price: 300 },
+    { name: "Матовый чёрный минимализм", sub: "Чёрный металл, белые или золотые буквы", tag: "Тренд", art: "black",
+      desc: "Строгая табличка в современном стиле: матовый чёрный металл и тонкий шрифт. Для офисов, салонов, кофеен.", sizes: ["250×100", "300×150", "Свой"], mats: ["Металл", "Акрил"], price: 300 },
+    { name: "Под дерево", sub: "Тёплый эко-стиль", art: "wood",
+      desc: "Табличка с фактурой дерева и гравировкой. Для кафе, загородных домов, бутиков.", sizes: ["300×150", "400×200", "Свой"], mats: ["Композит", "Пластик ПВХ"], price: 300 },
+    { name: "Табличка с подсветкой", sub: "Видно вечером и ночью", tag: "Премиум", art: "glow",
+      desc: "Подсветка по контуру или изнутри. Номер дома, вывеска, режим работы, которые видно в темноте.", sizes: ["400×250", "600×300", "Свой"], mats: ["Акрил", "Композит"], price: 300 },
+  ]},
+  { cat: "Офис и магазин", items: [
+    { name: "Режим работы", sub: "Стекло, стена или дверь", tag: "Хит", photo: "img/administraciya-studio-cut.webp", cut: true,
+      desc: "График работы с вашим логотипом и реквизитами. Поможем с текстом.", sizes: ["300×200", "400×300", "Свой"], mats: MATS, price: 300 },
+    { name: "Таблички под золото и серебро", sub: "Касса, кабинет, домофон", tag: "Премиум", art: "goldset",
+      desc: "Металлические таблички с гравировкой и печатью под золото или серебро. Солидно смотрятся в офисе и банке.", sizes: ["250×100", "300×150", "Свой"], mats: ["Под золото / серебро", "Металл", "Акрил"], price: 300 },
+    { name: "Табличка на кабинет", sub: "Номер, ФИО, должность", art: "cabinet",
+      desc: "Серия на весь этаж в одном стиле. Можно со сменными вставками.", sizes: ["250×100", "300×150", "Свой"], mats: MATS, price: 300 },
+    { name: "Вход / Выход", sub: "Комплект указателей", art: "enter",
+      desc: "Указатели на двери и стены, в стиле остальных табличек.", sizes: ["300×100", "Свой"], mats: MATS, price: 300 },
+    { name: "Открыто / Закрыто", sub: "Двусторонняя на дверь", tag: "Тренд", art: "open",
+      desc: "Двусторонняя табличка на шнуре или присоске. Делаем в стиле вашего заведения.", sizes: ["250×150", "300×200", "Свой"], mats: ["Акрил", "Пластик ПВХ", "Под дерево"], price: 300 },
+    { name: "Wi-Fi с QR-кодом", sub: "Гость подключается за секунду", tag: "Тренд", art: "wifi",
+      desc: "Табличка с QR-кодом для подключения к Wi-Fi: для кафе, салонов, гостиниц и офисов.", sizes: ["150×150", "200×200", "Свой"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
+    { name: "Навигация по зданию", sub: "Стрелки, этажи, кабинеты", art: "nav",
+      desc: "Указатели в едином стиле: куда идти, какой этаж, где кабинеты. Делаем комплектом на здание.", sizes: ["400×150", "600×200", "Свой"], mats: MATS, price: 300 },
+    { name: "Уголок потребителя", sub: "Стенд с карманами", art: "stand",
+      desc: "Любое число карманов А4 и А5, размер под вашу стену.", sizes: ["2 кармана", "4 кармана", "6 карманов", "Свой"], mats: ["Пластик ПВХ", "Композит"], price: 300 },
+    { name: "Санузел, WC", sub: "М / Ж / маломобильные", art: "wc",
+      desc: "Пиктограммы на двери санузлов, в том числе тактильные.", sizes: ["150×150", "200×200"], mats: MATS, price: 300 },
+  ]},
+  { cat: "Безопасность", items: [
+    { name: "План эвакуации", sub: "Светится в темноте", tag: "ГОСТ", art: "evac",
+      desc: "Фотолюминесцентный план по вашему плану этажа, документам БТИ или фото. Светится, когда отключили свет.", sizes: ["А3 300×400", "А2 400×600", "Свой"], mats: ["Пластик ПВХ", "Композит"], price: 300 },
+    { name: "Знаки безопасности", sub: "Для производства и склада", photo: "img/kran-studio-cut.webp", cut: true,
+      desc: "Запрещающие, предупреждающие, предписывающие. Можно с текстом на двух языках.", sizes: ["200×200", "300×300", "Свой"], mats: ["Пластик ПВХ", "Металл", "Композит"], price: 300 },
+    { name: "Пожарная безопасность", sub: "Огнетушитель, выход, гидрант", art: "fire",
+      desc: "Знаки по ГОСТ, в том числе фотолюминесцентные.", sizes: ["150×150", "200×200", "Комплект"], mats: ["Пластик ПВХ", "Металл"], price: 300 },
+    { name: "Курение запрещено", sub: "Обязательный знак", art: "nosmoke",
+      desc: "Знак, который обязана повесить каждая организация.", sizes: ["200×200", "200×300"], mats: ["Пластик ПВХ", "Металл"], price: 300 },
+    { name: "Ведётся видеонаблюдение", sub: "Вход и территория", art: "video",
+      desc: "Для входа, парковки и территории.", sizes: ["200×150", "300×200"], mats: ["Пластик ПВХ", "Металл"], price: 300 },
+  ]},
+  { cat: "Доступная среда", items: [
+    { name: "Тактильные таблички", sub: "Шрифт Брайля", tag: "Для учреждений", art: "tactile",
+      desc: "Таблички на двери для поликлиник, администраций и школ по требованиям доступной среды.", sizes: ["150×150", "200×300", "Свой"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
+    { name: "Тактильные мнемосхемы", sub: "Схема помещений", art: "tactile2",
+      desc: "Схема этажа или здания для незрячих посетителей. Делаем комплектом на объект.", sizes: ["А3", "А2", "Свой"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
+    { name: "Мнемосхема санузла", sub: "Тактильная", art: "wctactile",
+      desc: "Мнемосхема санузла для маломобильных посетителей.", sizes: ["А4", "А3"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
+  ]},
+  { cat: "Для ТСЖ и УК", items: [
+    { name: "Стенды и таблички этажей", sub: "Для всего дома", art: "stand",
+      desc: "Стенд «Информация» с карманами и таблички этажей одним заказом.", sizes: ["4 кармана", "6 карманов", "Свой"], mats: ["Пластик ПВХ", "Композит"], price: 300 },
+    { name: "Информационные щиты", sub: "Правила, схемы, указатели", art: "rules",
+      desc: "Щиты с правилами и предупреждениями: у воды, на въездах, на территориях.", sizes: ["600×400", "1000×700", "Свой"], mats: STREET, price: 300 },
+  ]},
+  { cat: "Для дома", items: [
+    { name: "Осторожно, злая собака", sub: "Калитка, забор", art: "dog",
+      desc: "Металлическая табличка для улицы, не выцветает.", sizes: ["200×150", "300×200"], mats: STREET, price: 300 },
+    { name: "Частная территория", sub: "Въезд запрещён", art: "private",
+      desc: "Можно с вашим текстом и по фото образца.", sizes: ["300×200", "400×300", "Свой"], mats: STREET, price: 300 },
+    { name: "Не парковаться", sub: "Ворота, выезд", art: "noparking",
+      desc: "Для ворот, гаража и выезда.", sizes: ["300×200", "400×300"], mats: STREET, price: 300 },
+  ]},
+  { cat: "Проекты", items: [
+    { name: "Стенды с подсветкой", sub: "Фигурные, под заказ", tag: "Наш проект", photo: "karta-omsk.jpg",
+      desc: "Например, карта Омской области с подсветкой по контуру: вырезали основу по границам, напечатали карту, смонтировали свет.", sizes: ["Свой"], mats: ["Композит", "Акрил"], price: 300 },
+  ]},
+];
+const CUSTOM = { name: "Своя задача", sub: "", art: "custom", desc: "Опишите, что нужно получить. Подскажем материал, размер и подготовим макет.", sizes: [], mats: [], price: 300 };
+
+/* ===== Логика ===== */
+const tg = window.Telegram && Telegram.WebApp;
+const haptic = t => { try { tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred(t || "light"); } catch (e) {} };
+const fmt = p => p ? `от ${p.toLocaleString("ru-RU")} ₽` : "Цена по запросу";
+/* Нарисованные таблички для позиций без фото: металл, стекло, блик, винты */
+const DEFS = `<defs>
+  <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e2ad"/><stop offset=".45" stop-color="#b98f3e"/><stop offset=".7" stop-color="#e9cc84"/><stop offset="1" stop-color="#a87e33"/></linearGradient>
+  <linearGradient id="gSilver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fafafa"/><stop offset=".5" stop-color="#a7adb3"/><stop offset=".75" stop-color="#e8eaec"/><stop offset="1" stop-color="#8d939a"/></linearGradient>
+  <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f74e0"/><stop offset="1" stop-color="#173f8a"/></linearGradient>
+  <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2bb36a"/><stop offset="1" stop-color="#11633a"/></linearGradient>
+  <linearGradient id="gYellow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd84f"/><stop offset="1" stop-color="#e3a500"/></linearGradient>
+  <linearGradient id="gShine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#000" flood-opacity=".7"/></filter>
+</defs>`;
+const screws = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x1, y2], [x2, y2]].map(([x, y]) =>
+  `<circle cx="${x}" cy="${y}" r="3.2" fill="#d9dde1" stroke="#6b7076" stroke-width=".8"/>`).join("");
+const T = (x, y, s, txt, fill, w = 700, f = "Unbounded") => `<text x="${x}" y="${y}" font-family="${f},Arial" font-weight="${w}" font-size="${s}" fill="${fill}" text-anchor="middle">${txt}</text>`;
+const plate = (x, y, w, h, fill, inner, r = 8) => `<g filter="url(#sh)"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}"/>${inner}
+  <rect class="shine" x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="url(#gShine)" opacity=".55"/></g>`;
+const ART = {
+  number: plate(35, 45, 130, 110, "url(#gBlue)", `<rect x="43" y="53" width="114" height="94" rx="5" fill="none" stroke="#fff" stroke-width="3"/>${T(100, 82, 11, "УЛ. МИРА", "#fff", 600, "Manrope")}${T(100, 130, 46, "12", "#fff")}`),
+  apt: plate(55, 55, 90, 90, "url(#gGold)", `${T(100, 113, 34, "47", "#3a2a0c")}${screws(64, 64, 136, 136)}`, 6),
+  cabinet: plate(25, 60, 150, 80, "url(#gSilver)", `${T(100, 95, 15, "ДИРЕКТОР", "#22262b")}<rect x="60" y="104" width="80" height="2" fill="#22262b" opacity=".35"/>${T(100, 124, 12, "кабинет 201", "#22262b", 600, "Manrope")}${screws(33, 68, 167, 132)}`, 4),
+  enter: plate(30, 70, 140, 60, "url(#gSilver)", `${T(88, 108, 22, "ВХОД", "#22262b")}<path d="M128 100h22m-8-8 8 8-8 8" stroke="#22262b" stroke-width="4" fill="none" stroke-linecap="round"/>`, 4),
+  wc: plate(40, 50, 120, 100, "url(#gSilver)", `<circle cx="78" cy="78" r="8" fill="#22262b"/><path d="M68 92h20v30h-6v20h-8v-20h-6z" fill="#22262b"/><circle cx="122" cy="78" r="8" fill="#22262b"/><path d="M112 92h20l6 32h-9v18h-14v-18h-9z" fill="#22262b"/><rect x="99" y="72" width="2" height="68" fill="#22262b" opacity=".4"/>`, 6),
+  entrance: plate(45, 30, 110, 140, "#1d2a5c", `<rect x="51" y="36" width="98" height="128" rx="3" fill="none" stroke="#e8ecf5" stroke-width="1.5"/>${T(100, 56, 11, "ПОДЪЕЗД № 1", "#fff")}${[0, 1, 2, 3, 4].map(i => `<line x1="51" y1="${66 + i * 19}" x2="149" y2="${66 + i * 19}" stroke="#e8ecf5" stroke-width="1"/>${T(76, 80 + i * 19, 8.5, (5 - i) + " этаж", "#fff", 600, "Manrope")}${T(123, 80 + i * 19, 8.5, (17 - i * 4) + "–" + (20 - i * 4), "#fff", 600, "Manrope")}`).join("")}<line x1="100" y1="66" x2="100" y2="161" stroke="#e8ecf5" stroke-width="1"/>`, 5),
+  wctactile: plate(40, 45, 120, 110, "url(#gYellow)", `<circle cx="80" cy="66" r="7" fill="#1c1c1c"/><path d="M71 78h18v26h-5v18h-8v-18h-5z" fill="#1c1c1c"/><circle cx="120" cy="66" r="7" fill="#1c1c1c"/><path d="M111 78h18l5 28h-8v16h-12v-16h-8z" fill="#1c1c1c"/><rect x="99" y="62" width="2" height="62" fill="#1c1c1c" opacity=".5"/>${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<circle cx="${72 + i * 8}" cy="138" r="1.8" fill="#1c1c1c"/><circle cx="${72 + i * 8}" cy="145" r="1.8" fill="#1c1c1c" opacity="${i % 2 ? 1 : .35}"/>`).join("")}`, 6),
+  fire: plate(50, 50, 100, 100, "#d42d24", `<rect x="88" y="78" width="24" height="52" rx="6" fill="#fff"/><rect x="92" y="68" width="16" height="12" rx="2" fill="#fff"/><path d="M108 70c12-4 18 2 20 10" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="88" y="96" width="24" height="5" fill="#d42d24"/>`, 4),
+  nosmoke: plate(50, 50, 100, 100, "#fff", `<rect x="72" y="96" width="50" height="10" fill="#22262b"/><rect x="122" y="96" width="8" height="10" fill="#e07b28"/><circle cx="100" cy="100" r="36" fill="none" stroke="#d42d24" stroke-width="9"/><path d="M75 75l50 50" stroke="#d42d24" stroke-width="9"/>`, 4),
+  video: plate(30, 55, 140, 90, "url(#gYellow)", `<rect x="58" y="76" width="44" height="26" rx="4" fill="#1c1c1c"/><path d="M102 84l16-8v26l-16-8z" fill="#1c1c1c"/><rect x="74" y="102" width="6" height="12" fill="#1c1c1c"/>${T(100, 126, 10, "ВЕДЁТСЯ", "#1c1c1c", 700, "Manrope")}${T(100, 139, 10, "ВИДЕОНАБЛЮДЕНИЕ", "#1c1c1c", 700, "Manrope")}`, 6),
+  rules: plate(25, 40, 150, 120, "url(#gGreen)", `${T(100, 66, 13, "ПРАВИЛА", "#fff")}${[0, 1, 2, 3, 4].map(i => `<circle cx="44" cy="${84 + i * 15}" r="3" fill="#fff"/><rect x="54" y="${81 + i * 15}" width="${100 - i * 9}" height="5" rx="2.5" fill="#fff" opacity=".85"/>`).join("")}`, 6),
+  dog: plate(30, 50, 140, 100, "url(#gYellow)", `<path d="M86 97V77l2-15 9 11h7l14 6 3 6-3 3h-14l-4 9z" fill="#1c1c1c"/><circle cx="101" cy="78" r="1.6" fill="#f5c84a"/>${T(100, 116, 11, "ОСТОРОЖНО", "#1c1c1c")}${T(100, 136, 11, "ЗЛАЯ СОБАКА", "#1c1c1c")}`, 6),
+  private: plate(30, 55, 140, 90, "#fff", `<rect x="30" y="55" width="140" height="22" fill="#d42d24"/>${T(100, 71, 11, "ВНИМАНИЕ", "#fff")}${T(100, 104, 13, "ЧАСТНАЯ", "#d42d24")}${T(100, 126, 13, "ТЕРРИТОРИЯ", "#d42d24")}`, 6),
+  noparking: plate(40, 45, 120, 110, "url(#gBlue)", `<circle cx="100" cy="88" r="30" fill="#fff"/>${T(100, 101, 34, "P", "#1f5fbf")}<path d="M79 67l42 42" stroke="#d42d24" stroke-width="7"/>${T(100, 140, 11, "НЕ ПАРКОВАТЬСЯ", "#fff", 700, "Manrope")}`, 8),
+  acrylic: `<g filter="url(#sh)"><rect x="30" y="55" width="140" height="90" rx="6" fill="rgba(210,235,255,.18)" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
+    ${T(100, 98, 16, "RECEPTION", "#f3eee9", 600)}<rect x="66" y="108" width="68" height="2" fill="#d8b46a"/>${T(100, 126, 10, "Добро пожаловать", "#cfd6dd", 600, "Manrope")}
+    ${[[40, 65], [160, 65], [40, 135], [160, 135]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="url(#gSilver)" stroke="#6b7076"/>`).join("")}</g>`,
+  black: plate(30, 65, 140, 70, "#1b1b1d", `${T(100, 98, 15, "MANAGER", "#e9cc84", 500)}<rect x="70" y="106" width="60" height="1.5" fill="#e9cc84" opacity=".7"/>${T(100, 122, 10, "кабинет 12", "#c9c9c9", 500, "Manrope")}`, 3),
+  wood: plate(30, 60, 140, 80, "#8a5a33", `${[0, 1, 2, 3, 4, 5].map(i => `<path d="M30 ${70 + i * 12}c40 -6 80 6 140 -2" stroke="#6e4423" stroke-width="2" fill="none" opacity=".55"/>`).join("")}${T(100, 98, 15, "COFFEE", "#f3e3c8", 700)}${T(100, 120, 10, "с 8:00 до 22:00", "#f3e3c8", 600, "Manrope")}`, 6),
+  glow: `<g><rect x="35" y="55" width="130" height="90" rx="10" fill="#120d0e" stroke="#f3dca4" stroke-width="2" style="filter: drop-shadow(0 0 8px rgba(243,220,164,.9)) drop-shadow(0 0 22px rgba(217,71,95,.55))"/>
+    ${T(100, 108, 34, "24", "#fff3d6")}${T(100, 130, 10, "УЛ. ЛЕНИНА", "#f3dca4", 600, "Manrope")}</g>`,
+  open: plate(40, 50, 120, 100, "#f3eee9", `<path d="M70 50l30-22 30 22" stroke="#d8b46a" stroke-width="2" fill="none"/><circle cx="100" cy="28" r="3" fill="#d8b46a"/>${T(100, 98, 20, "OPEN", "#1b1b1d")}${T(100, 122, 11, "мы открыты", "#7d1529", 600, "Manrope")}`, 8),
+  wifi: plate(45, 40, 110, 120, "#1b1b1d", `<path d="M78 70a32 32 0 0 1 44 0M85 78a20 20 0 0 1 30 0M93 86a8 8 0 0 1 14 0" stroke="#e9cc84" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="72" y="96" width="56" height="44" rx="3" fill="#fff"/>${[...Array(25)].map((_, i) => (i * 7 % 3) ? `<rect x="${76 + (i % 5) * 10}" y="${100 + Math.floor(i / 5) * 8}" width="8" height="6" fill="#1b1b1d"/>` : "").join("")}`, 8),
+  nav: plate(20, 60, 160, 80, "url(#gSilver)", `${T(86, 92, 10, "КАБИНЕТЫ 201–210", "#22262b", 700, "Manrope")}<path d="M150 86h16m-6-6 6 6-6 6" stroke="#7d1529" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <rect x="28" y="102" width="144" height="1.5" fill="#22262b" opacity=".3"/>${T(94, 124, 10, "БУХГАЛТЕРИЯ", "#22262b", 700, "Manrope")}<path d="M166 118h-16m6-6-6 6 6 6" stroke="#7d1529" stroke-width="3.5" fill="none" stroke-linecap="round"/>`, 4),
+  goldset: `${plate(22, 48, 74, 44, "url(#gGold)", T(59, 76, 12, "КАССА", "#3a2a0c"), 4)}${plate(104, 48, 74, 44, "url(#gSilver)", T(141, 76, 9, "ДОМОФОН", "#22262b"), 4)}${plate(40, 108, 120, 50, "url(#gGold)", `${T(100, 131, 10, "ВНИМАНИЕ!", "#3a2a0c")}${T(100, 147, 7.5, "ВЕДЁТСЯ ВИДЕОНАБЛЮДЕНИЕ", "#3a2a0c", 700, "Manrope")}`, 4)}`,
+  stand: plate(22, 40, 156, 120, "#f3f5f8", `<rect x="22" y="40" width="156" height="26" rx="6" fill="#1f5fbf"/>${T(100, 58, 12, "ИНФОРМАЦИЯ", "#fff")}${[0, 1, 2].map(i => `<rect x="${32 + i * 48}" y="74" width="40" height="76" rx="2" fill="#dfe6ef" stroke="#9fb3cc"/><rect x="${36 + i * 48}" y="80" width="32" height="4" fill="#9fb3cc"/>`).join("")}`, 6),
+  evac: plate(20, 40, 160, 120, "#d9f7c9", `<rect x="20" y="40" width="160" height="18" rx="6" fill="#1d8a4a"/>${T(100, 53, 9, "ПЛАН ЭВАКУАЦИИ", "#fff", 700, "Manrope")}
+    <path d="M30 66h140v80H30z M30 100h60 M90 66v80 M120 66v40h50" stroke="#1d8a4a" stroke-width="2" fill="none"/><path d="M50 128h60l-8-7m8 7-8 7" stroke="#d42d24" stroke-width="3" fill="none"/><rect x="146" y="126" width="18" height="14" fill="#1d8a4a"/>
+    <rect x="20" y="40" width="160" height="120" rx="6" fill="#b6ff8a" opacity=".12"/>`, 6),
+  tactile: plate(35, 45, 130, 110, "url(#gYellow)", `${T(100, 78, 9.5, "АДМИНИСТРАЦИЯ", "#1c1c1c")}${T(100, 96, 10, "приёмная", "#1c1c1c", 600, "Manrope")}
+    <g fill="#1c1c1c">${[...Array(18)].map((_, i) => `<circle cx="${58 + (i % 9) * 10}" cy="${116 + Math.floor(i / 9) * 12}" r="2.3"/>`).join("")}</g>`, 6),
+  tactile2: plate(30, 40, 140, 120, "url(#gYellow)", `${T(100, 60, 10, "МНЕМОСХЕМА", "#1c1c1c")}<path d="M44 70h112v76H44z M44 108h50 M94 70v76 M124 70v30h32" stroke="#1c1c1c" stroke-width="3" fill="none"/>
+    <circle cx="68" cy="90" r="6" fill="#1c1c1c"/><path d="M62 126h18" stroke="#1c1c1c" stroke-width="4"/>${T(140, 132, 12, "WC", "#1c1c1c")}`, 6),
+  custom: plate(35, 50, 130, 100, "url(#gGold)", `${T(100, 92, 15, "ВАШ ТЕКСТ", "#3a2a0c")}<rect x="62" y="104" width="76" height="3" rx="1.5" fill="#3a2a0c" opacity=".45"/>${T(100, 128, 11, "любой размер", "#3a2a0c", 600, "Manrope")}${screws(44, 59, 156, 141)}`, 6),
+};
+const artSvg = k => `<svg class="art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${DEFS}${ART[k]}</svg>`;
+const visual = it => it.photo ? `<img class="${it.cut ? "cut" : ""}" src="${it.photo.startsWith("img/") ? it.photo : CONFIG.img + it.photo}" alt="${it.name}" loading="lazy">` : artSvg(it.art);
+const tabsEl = document.getElementById("tabs"), listEl = document.getElementById("list");
+
+function render() {
+  const cats = ["Все", ...CATALOG.map(c => c.cat)];
+  tabsEl.innerHTML = cats.map((c, i) => `<button class="tab ${i ? "" : "on"}" data-c="${c}">${c}</button>`).join("");
+  listEl.innerHTML = CATALOG.map((c, ci) => `
+    <section data-cat="${c.cat}">
+      <div class="section-title"><h2>${c.cat}</h2><span>${c.items.length}</span></div>
+      <div class="grid">${c.items.map((it, ii) => `
+        <button class="card" onclick="openSheet(CATALOG[${ci}].items[${ii}])">
+          <div class="ph">${it.tag ? `<span class="tag">${it.tag}</span>` : ""}${visual(it)}</div>
+          <div class="info"><div class="name">${it.name}</div><div class="sub">${it.sub}</div></div>
+        </button>`).join("")}</div>
+    </section>`).join("");
+  tabsEl.onclick = e => {
+    const b = e.target.closest(".tab"); if (!b) return;
+    haptic();
+    tabsEl.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === b));
+    b.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    listEl.querySelectorAll("section").forEach(s => {
+      s.hidden = b.dataset.c !== "Все" && s.dataset.cat !== b.dataset.c;
+      s.querySelectorAll(".card").forEach(c => { c.classList.remove("in"); io.observe(c); });
+    });
+  };
+  document.querySelectorAll(".card").forEach(c => io.observe(c));
+}
+
+const io = new IntersectionObserver(es => es.forEach((e, i) => {
+  if (e.isIntersecting) { setTimeout(() => e.target.classList.add("in"), (i % 6) * 70); io.unobserve(e.target); }
+}), { threshold: .12 });
+
+let cur = null, size = "", mat = "";
+function chips(el, arr, onPick) {
+  el.innerHTML = arr.map((v, i) => `<button class="chip ${i ? "" : "on"}">${v}</button>`).join("");
+  onPick(arr[0] || "");
+  el.onclick = e => { const b = e.target.closest(".chip"); if (!b) return; haptic();
+    el.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === b)); onPick(b.textContent); };
+}
+function openSheet(it) {
+  cur = it; haptic("medium");
+  document.getElementById("s-img").innerHTML = visual(it);
+  document.getElementById("s-name").textContent = it.name;
+  document.getElementById("s-desc").textContent = it.desc;
+  document.getElementById("s-sizes-wrap").hidden = !it.sizes.length;
+  document.getElementById("s-mat-wrap").hidden = !it.mats.length;
+  chips(document.getElementById("s-sizes"), it.sizes.map(s => /^\d/.test(s) && s.includes("×") ? s + " мм" : s), v => size = v);
+  chips(document.getElementById("s-mats"), it.mats, v => mat = v);
+  document.getElementById("scrim").classList.add("on");
+  const sh = document.getElementById("sheet"); sh.scrollTop = 0; sh.classList.add("on");
+  if (tg && tg.BackButton) { tg.BackButton.show(); tg.BackButton.onClick(closeSheet); }
+}
+function closeSheet() {
+  document.getElementById("scrim").classList.remove("on");
+  document.getElementById("sheet").classList.remove("on");
+  if (tg && tg.BackButton) tg.BackButton.hide();
+}
+function sendOrder() {
+  const v = id => document.getElementById(id).value.trim();
+  const msg = [
+    "Здравствуйте! Хочу заказать из Телеграм-каталога:",
+    `• ${cur.name}`,
+    size && `• Размер: ${size}`,
+    mat && `• Материал: ${mat}`,
+    v("s-text") && `• Текст: ${v("s-text")}`,
+    `• Количество: ${v("s-qty") || 1}`,
+    v("s-city") && `• Город: ${v("s-city")}`,
+    v("s-note") && `• Комментарий: ${v("s-note")}`,
+  ].filter(Boolean).join("\n");
+  const url = `https://t.me/${CONFIG.manager}?text=${encodeURIComponent(msg)}`;
+  try { tg && tg.HapticFeedback && tg.HapticFeedback.notificationOccurred("success"); } catch (e) {}
+  if (tg && tg.initData) tg.openTelegramLink(url); else window.open(url, "_blank");
+  closeSheet();
+}
+
+if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor("#0a0708"); tg.setBackgroundColor("#0a0708"); } catch (e) {} }
+render();
+</script>
+</body>
+</html>
