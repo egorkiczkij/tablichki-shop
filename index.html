@@ -122,12 +122,12 @@
   .contact .who { flex: 1; min-width: 0; }
   .contact .who b { font: 600 16px var(--head); }
   .contact .who span { display: block; color: var(--muted); font-size: 12.5px; }
-  .contact .who a { display: inline-block; margin-top: 4px; font-weight: 700; font-size: 16px; color: var(--gold2); text-decoration: none; }
+  .contact .who a { display: inline-block; margin-top: 6px; font: 700 clamp(18px, 5.2vw, 21px) var(--head); color: var(--gold2); text-decoration: none; }
   .contact-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .contact-btns .btn { padding: 12px 10px; text-decoration: none; font-size: 14px; }
   .btn.ghost { background: transparent; border: 1px solid rgba(243,220,164,.4); color: var(--gold2); box-shadow: none; }
-  .hero-call { position: relative; display: inline-flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 13.5px; color: var(--muted); text-decoration: none; }
-  .hero-call b { color: var(--gold2); }
+  .hero-call { position: relative; display: inline-flex; gap: 8px; align-items: baseline; flex-wrap: wrap; margin-top: 16px; font-size: 15px; color: var(--muted); text-decoration: none; }
+  .hero-call b { color: var(--gold2); font: 700 clamp(18px, 5.4vw, 22px) var(--head); letter-spacing: .01em; }
   footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: 12px; }
 
   /* Sheet */
@@ -139,6 +139,10 @@
   .sheet .grab { width: 44px; height: 5px; border-radius: 9px; background: rgba(255,255,255,.2); margin: 10px auto 0; }
   .sheet .hero-img { position: relative; margin: 12px 16px 0; border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 10; background: radial-gradient(120% 90% at 30% 20%, #2a1a1d, #120d0e); }
   .sheet .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sheet .hero-img .art { transform: scale(1.5); }                       /* нарисованные таблички крупнее */
+  .sheet .hero-img img.cut { padding: 5%; object-fit: contain; }
+  .sheet .hero-img.full { aspect-ratio: auto; background: #0d0a0b; }      /* живые фото целиком, без обрезки */
+  .sheet .hero-img.full img { height: auto; max-height: 64vh; object-fit: contain; }
   .sheet .content { padding: 16px; max-width: 760px; margin: 0 auto; }
   .sheet h3 { font: 600 21px/1.2 var(--head); margin: 0 0 6px; }
   .sheet .desc { color: var(--muted); margin: 0 0 14px; }
@@ -431,7 +435,9 @@ function chips(el, arr, onPick) {
 }
 function openSheet(it) {
   cur = it; haptic("medium");
-  document.getElementById("s-img").innerHTML = visual(it);
+  const himg = document.getElementById("s-img");
+  himg.innerHTML = visual(it);
+  himg.classList.toggle("full", !!(it.photo && !it.cut));
   document.getElementById("s-name").textContent = it.name;
   document.getElementById("s-desc").textContent = it.desc;
   document.getElementById("s-sizes-wrap").hidden = !it.sizes.length;
