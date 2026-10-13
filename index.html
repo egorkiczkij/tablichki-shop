@@ -111,6 +111,23 @@
   .why div { border: 1px solid var(--line); border-radius: 16px; padding: 14px; background: var(--card); }
   .why b { font-family: var(--head); font-weight: 600; font-size: 14px; }
   .why p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .pitch { margin-top: 14px; padding: 15px 16px 15px 18px; border-radius: 16px; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, rgba(216,180,106,.12), rgba(179,38,63,.08)); border: 1px solid rgba(243,220,164,.18); }
+  .pitch::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 3px; background: linear-gradient(var(--gold2), var(--gold)); }
+  .pitch b { font: 600 14.5px var(--head); color: var(--gold2); }
+  .pitch p { margin: 5px 0 0; font-size: 13.5px; color: #cfc6be; }
+  .contact { margin-top: 26px; display: flex; gap: 14px; align-items: center; padding: 16px; border-radius: var(--r); background: var(--card); border: 1px solid rgba(243,220,164,.25); }
+  .contact .ava { flex: none; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; font: 700 22px var(--head); color: #241a07;
+    background: linear-gradient(135deg, var(--gold2), var(--gold)); }
+  .contact .who { flex: 1; min-width: 0; }
+  .contact .who b { font: 600 16px var(--head); }
+  .contact .who span { display: block; color: var(--muted); font-size: 12.5px; }
+  .contact .who a { display: inline-block; margin-top: 4px; font-weight: 700; font-size: 16px; color: var(--gold2); text-decoration: none; }
+  .contact-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .contact-btns .btn { padding: 12px 10px; text-decoration: none; font-size: 14px; }
+  .btn.ghost { background: transparent; border: 1px solid rgba(243,220,164,.4); color: var(--gold2); box-shadow: none; }
+  .hero-call { position: relative; display: inline-flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 13.5px; color: var(--muted); text-decoration: none; }
+  .hero-call b { color: var(--gold2); }
   footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: 12px; }
 
   /* Sheet */
@@ -148,6 +165,7 @@
       <div class="stat"><b>от 300 ₽</b><span>за табличку</span></div>
       <div class="stat"><b>от 1 шт</b><span>по всей РФ</span></div>
     </div>
+    <a class="hero-call" href="tel:+79136440994">Егор, таблички: <b>+7 (913) 644-09-94</b></a>
   </section>
 
   <nav class="tabs" id="tabs"></nav>
@@ -159,12 +177,24 @@
     <button class="btn gold" onclick="openSheet(CUSTOM)">Обсудить задачу</button>
   </section>
 
+  <section>
+    <div class="contact">
+      <div class="ava">Е</div>
+      <div class="who"><b>Егор</b><span>Отвечает за таблички: подскажет материал, размер и сделает макет</span>
+        <a href="tel:+79136440994">+7 (913) 644-09-94</a></div>
+    </div>
+    <div class="contact-btns">
+      <a class="btn ghost" href="tel:+79136440994" onclick="return call()">Позвонить</a>
+      <button class="btn" onclick="writeTg()">Написать в Telegram</button>
+    </div>
+  </section>
+
   <section class="why">
     <div><b>Всё в одном цеху</b><p>УФ-печать, резка плёнки, металл и порошковая окраска. Не ждём подрядчиков и отвечаем за качество.</p></div>
     <div><b>Макет бесплатно</b><p>Поможем с текстом и размером, согласуем макет до запуска в работу.</p></div>
     <div><b>Работаем с организациями</b><p>Счёт, договор, закрывающие документы. Госзаказчики, УК, школы, поликлиники.</p></div>
   </section>
-  <footer>ООО «Автодор флот» · Омск · Отвечаем в рабочее время 8:00–17:00 (Омск)</footer>
+  <footer>ООО «Автодор флот» · Омск · 35 лет опыта<br>Егор: +7 (913) 644-09-94 · Отвечаем в рабочее время 8:00–17:00 (Омск)</footer>
 </div>
 
 <div class="scrim" id="scrim" onclick="closeSheet()"></div>
@@ -184,14 +214,15 @@
     </div>
     <input class="field" id="s-note" placeholder="Комментарий: цвет, крепление, сроки">
     <button class="btn send" id="s-send" onclick="sendOrder()">Написать в Telegram</button>
-    <div class="note">Цена от 300 ₽, точную рассчитаем по вашему макету. Откроется чат с нами, сообщение уже заполнено.</div>
+    <div class="note">Цена от 300 ₽, точную рассчитаем по вашему макету. Откроется чат с нами, сообщение уже заполнено.<br>Удобнее голосом? Егор: <a href="tel:+79136440994" onclick="return call()" style="color:var(--gold2)">+7 (913) 644-09-94</a></div>
   </div>
 </div>
 
 <script>
 /* ===== Настройки ===== */
 const CONFIG = {
-  manager: "egor_autodorflot",                                  // ник в Телеграме без @, сюда приходят заявки
+  manager: "egor_autodorflot",
+  phone: "+79136440994", phoneText: "+7 (913) 644-09-94",   // Егор, таблички                                  // ник в Телеграме без @, сюда приходят заявки
   img: "https://autodorflot.ru/tablichki/img/",          // фото работ с нашего сайта
 };
 const MATS = ["Металл", "Композит", "Пластик ПВХ", "Акрил", "Под золото / серебро"];
@@ -200,7 +231,7 @@ const STREET = ["Металл", "Композит"];
 /* ===== Каталог =====
    photo: файл фото из CONFIG.img, plate: цвет заглушки и надпись, price: «от» в рублях или null */
 const CATALOG = [
-  { cat: "Адресные", items: [
+  { cat: "Адресные", pitch: ["Видно ночью в свете фар", "Номер дома и улицу печатаем на световозвращающей плёнке, как на дорожных знаках: мы сами делаем дорожные знаки. Металл с порошковой окраской не ржавеет и не выцветает, омские морозы и солнце ему не страшны."], items: [
     { name: "Фасадные и адресные таблички", sub: "Стекло, металл, световозвращающие", tag: "Хит", photo: "img/adresnaya-studio-cut.webp", cut: true,
       desc: "Номер дома видно ночью в свете фар. Металл с порошковой окраской или композит, не боится солнца и мороза.", sizes: ["500×250", "600×300", "700×350", "Свой"], mats: STREET, price: 300 },
     { name: "Фигурные адресные таблички", sub: "Классика с фигурным низом", tag: "Наши работы", photo: "img/adres-figurnye.webp", cut: true,
@@ -224,7 +255,7 @@ const CATALOG = [
     { name: "Табличка с подсветкой", sub: "Видно вечером и ночью", tag: "Премиум", art: "glow",
       desc: "Подсветка по контуру или изнутри. Номер дома, вывеска, режим работы, которые видно в темноте.", sizes: ["400×250", "600×300", "Свой"], mats: ["Акрил", "Композит"], price: 300 },
   ]},
-  { cat: "Офис и магазин", items: [
+  { cat: "Офис и магазин", pitch: ["Нам доверяют госучреждения", "Наши таблички висят в администрациях районов Омской области, поликлиниках, ТСЖ и в филиале ФКУ «Сибуправтодор». Сделаем серию в одном стиле на всё здание."], items: [
     { name: "Режим работы", sub: "Стекло, стена или дверь", tag: "Хит", photo: "img/administraciya-studio-cut.webp", cut: true,
       desc: "График работы с вашим логотипом и реквизитами. Поможем с текстом.", sizes: ["300×200", "400×300", "Свой"], mats: MATS, price: 300 },
     { name: "Таблички под золото и серебро", sub: "Касса, кабинет, домофон", tag: "Премиум", art: "goldset",
@@ -244,7 +275,7 @@ const CATALOG = [
     { name: "Санузел, WC", sub: "М / Ж / маломобильные", art: "wc",
       desc: "Пиктограммы на двери санузлов, в том числе тактильные.", sizes: ["150×150", "200×200"], mats: MATS, price: 300 },
   ]},
-  { cat: "Безопасность", items: [
+  { cat: "Безопасность", pitch: ["Чтобы проверка не придралась", "Знаки и планы эвакуации делаем по действующим ГОСТ: правильные цвета, пиктограммы и размеры. План эвакуации печатаем на светонакопительной основе, он светится в темноте."], items: [
     { name: "План эвакуации", sub: "Светится в темноте", tag: "Наше фото", photo: "img/evac.webp", cut: true,
       desc: "Фотолюминесцентный план по вашему плану этажа, документам БТИ или фото. Светится, когда отключили свет.", sizes: ["А3 300×400", "А2 400×600", "Свой"], mats: ["Пластик ПВХ", "Композит"], price: 300 },
     { name: "Знаки безопасности", sub: "Для производства и склада", photo: "img/kran-studio-cut.webp", cut: true,
@@ -256,7 +287,7 @@ const CATALOG = [
     { name: "Ведётся видеонаблюдение", sub: "Вход и территория", art: "video",
       desc: "Для входа, парковки и территории.", sizes: ["200×150", "300×200"], mats: ["Пластик ПВХ", "Металл"], price: 300 },
   ]},
-  { cat: "Доступная среда", items: [
+  { cat: "Доступная среда", pitch: ["Доступная среда под ключ", "Шрифт Брайля, рельефные буквы, контрастные цвета, мнемосхемы этажей и санузлов. Подскажем, какие таблички обязательны для вашего учреждения, и сделаем весь комплект сразу."], items: [
     { name: "Тактильные таблички", sub: "Шрифт Брайля", tag: "Наше фото", photo: "img/tactile-cherlak.webp", cut: true,
       desc: "Таблички на двери для поликлиник, администраций и школ по требованиям доступной среды.", sizes: ["150×150", "200×300", "Свой"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
     { name: "Тактильные мнемосхемы", sub: "Схема помещений", art: "tactile2",
@@ -371,7 +402,8 @@ function render() {
         <button class="card" onclick="openSheet(CATALOG[${ci}].items[${ii}])">
           <div class="ph${it.work ? " work" : ""}">${it.tag ? `<span class="tag">${it.tag}</span>` : ""}${visual(it)}</div>
           <div class="info"><div class="name">${it.name}</div><div class="sub">${it.sub}</div></div>
-        </button>`).join("")}</div>
+        </button>`).join("")}</div>${c.pitch ? `
+      <div class="pitch"><b>${c.pitch[0]}</b><p>${c.pitch[1]}</p></div>` : ""}
     </section>`).join("");
   tabsEl.onclick = e => {
     const b = e.target.closest(".tab"); if (!b) return;
@@ -433,6 +465,11 @@ function sendOrder() {
   closeSheet();
 }
 
+function writeTg() {
+  const url = `https://t.me/${CONFIG.manager}?text=${encodeURIComponent("Здравствуйте, Егор! Пишу из каталога табличек.")}`;
+  haptic(); if (tg && tg.initData) tg.openTelegramLink(url); else window.open(url, "_blank");
+}
+function call() { haptic(); return true; }  // номер виден рядом текстом, если ссылка tel: не откроется
 if (tg) { tg.ready(); tg.expand(); try { tg.setHeaderColor("#0a0708"); tg.setBackgroundColor("#0a0708"); } catch (e) {} }
 render();
 </script>
