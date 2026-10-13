@@ -75,6 +75,12 @@
   .card .sub { margin-top: 3px; font-size: 12px; color: var(--muted); }
   .card .price { margin-top: 8px; font-weight: 700; font-size: 13px; color: var(--gold2); }
 
+  .years { display: flex; gap: 14px; align-items: center; margin: 0 0 12px; padding: 16px; border-radius: var(--r); border: 1px solid rgba(243,220,164,.3);
+    background: radial-gradient(120% 160% at 0% 0%, rgba(216,180,106,.18), transparent 60%), var(--card); }
+  .years > b { font: 700 46px/1 var(--head); background: linear-gradient(135deg, var(--gold2), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .years strong { font: 600 15px var(--head); }
+  .years p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .card .ph.work { aspect-ratio: 4 / 3; }
   .ph img.cut, .hero-img img.cut { object-fit: contain; padding: 9%; filter: drop-shadow(0 16px 22px rgba(0,0,0,.75)); }
   .art { position: absolute; inset: 0; width: 100%; height: 100%; }
   .card .ph .art { transition: transform 1.2s var(--ease); }
@@ -138,7 +144,7 @@
     <h1>Таблички, которые <em>выглядят дорого</em></h1>
     <p>Свой цех: печатаем, режем и красим сами. Выберите табличку, напишите нам, и мы подготовим макет под вашу задачу.</p>
     <div class="stats">
-      <div class="stat"><b>35</b><span>лет на рынке</span></div>
+      <div class="stat"><b>35 лет</b><span>опыта, свой цех</span></div>
       <div class="stat"><b>от 300 ₽</b><span>цена таблички</span></div>
       <div class="stat"><b>от 1 шт</b><span>доставка по РФ</span></div>
     </div>
@@ -203,7 +209,7 @@ const CATALOG = [
       desc: "Табличка с выделенным блоком для номера дома и корпуса. Серия на весь комплекс в одном стиле.", sizes: ["600×300", "700×350", "Свой"], mats: STREET, price: 300 },
     { name: "Номер дома крупно", sub: "Отдельный номер на фасад", art: "number",
       desc: "Крупный номер для фасада или забора, хорошо читается издалека.", sizes: ["300×300", "400×400", "Свой"], mats: STREET, price: 300 },
-    { name: "Таблички подъездов", sub: "С номерами квартир", art: "entrance",
+    { name: "Таблички подъездов", sub: "С номерами квартир", tag: "Наше фото", photo: "img/podezdy.webp", cut: true,
       desc: "Подъезды с диапазоном квартир для УК и ТСЖ. Серия в едином стиле на весь дом.", sizes: ["400×200", "500×250", "Свой"], mats: STREET, price: 300 },
     { name: "Номерки на квартиры", sub: "Комплект на подъезд", art: "apt",
       desc: "Номерки на двери под золото, серебро или в цвет подъезда.", sizes: ["100×100", "150×100", "Свой"], mats: MATS, price: 300 },
@@ -239,7 +245,7 @@ const CATALOG = [
       desc: "Пиктограммы на двери санузлов, в том числе тактильные.", sizes: ["150×150", "200×200"], mats: MATS, price: 300 },
   ]},
   { cat: "Безопасность", items: [
-    { name: "План эвакуации", sub: "Светится в темноте", tag: "ГОСТ", art: "evac",
+    { name: "План эвакуации", sub: "Светится в темноте", tag: "Наше фото", photo: "img/evac.webp", cut: true,
       desc: "Фотолюминесцентный план по вашему плану этажа, документам БТИ или фото. Светится, когда отключили свет.", sizes: ["А3 300×400", "А2 400×600", "Свой"], mats: ["Пластик ПВХ", "Композит"], price: 300 },
     { name: "Знаки безопасности", sub: "Для производства и склада", photo: "img/kran-studio-cut.webp", cut: true,
       desc: "Запрещающие, предупреждающие, предписывающие. Можно с текстом на двух языках.", sizes: ["200×200", "300×300", "Свой"], mats: ["Пластик ПВХ", "Металл", "Композит"], price: 300 },
@@ -251,30 +257,44 @@ const CATALOG = [
       desc: "Для входа, парковки и территории.", sizes: ["200×150", "300×200"], mats: ["Пластик ПВХ", "Металл"], price: 300 },
   ]},
   { cat: "Доступная среда", items: [
-    { name: "Тактильные таблички", sub: "Шрифт Брайля", tag: "Для учреждений", art: "tactile",
+    { name: "Тактильные таблички", sub: "Шрифт Брайля", tag: "Наше фото", photo: "img/tactile-cherlak.webp", cut: true,
       desc: "Таблички на двери для поликлиник, администраций и школ по требованиям доступной среды.", sizes: ["150×150", "200×300", "Свой"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
     { name: "Тактильные мнемосхемы", sub: "Схема помещений", art: "tactile2",
       desc: "Схема этажа или здания для незрячих посетителей. Делаем комплектом на объект.", sizes: ["А3", "А2", "Свой"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
-    { name: "Мнемосхема санузла", sub: "Тактильная", art: "wctactile",
+    { name: "Мнемосхема санузла", sub: "Тактильная", tag: "Наше фото", photo: "img/mnemo-sanuzel.webp", cut: true,
       desc: "Мнемосхема санузла для маломобильных посетителей.", sizes: ["А4", "А3"], mats: ["Акрил", "Пластик ПВХ"], price: 300 },
   ]},
   { cat: "Для ТСЖ и УК", items: [
-    { name: "Стенды и таблички этажей", sub: "Для всего дома", art: "stand",
+    { name: "Стенды и таблички этажей", sub: "Для всего дома", tag: "Наше фото", photo: "img/stend.webp", cut: true,
       desc: "Стенд «Информация» с карманами и таблички этажей одним заказом.", sizes: ["4 кармана", "6 карманов", "Свой"], mats: ["Пластик ПВХ", "Композит"], price: 300 },
     { name: "Информационные щиты", sub: "Правила, схемы, указатели", art: "rules",
       desc: "Щиты с правилами и предупреждениями: у воды, на въездах, на территориях.", sizes: ["600×400", "1000×700", "Свой"], mats: STREET, price: 300 },
   ]},
   { cat: "Для дома", items: [
-    { name: "Осторожно, злая собака", sub: "Калитка, забор", art: "dog",
-      desc: "Металлическая табличка для улицы, не выцветает.", sizes: ["200×150", "300×200"], mats: STREET, price: 300 },
+    { name: "Осторожно, злая собака", sub: "Порода по фото вашей собаки", art: "dog",
+      desc: "Металлическая табличка для улицы, не выцветает. Печатаем любую породу, можно фото вашей собаки: пришлите его в комментарии к заявке.", sizes: ["200×150", "300×200"], mats: STREET, price: 300 },
     { name: "Частная территория", sub: "Въезд запрещён", art: "private",
       desc: "Можно с вашим текстом и по фото образца.", sizes: ["300×200", "400×300", "Свой"], mats: STREET, price: 300 },
     { name: "Не парковаться", sub: "Ворота, выезд", art: "noparking",
       desc: "Для ворот, гаража и выезда.", sizes: ["300×200", "400×300"], mats: STREET, price: 300 },
   ]},
-  { cat: "Проекты", items: [
-    { name: "Стенды с подсветкой", sub: "Фигурные, под заказ", tag: "Наш проект", photo: "karta-omsk.jpg",
-      desc: "Например, карта Омской области с подсветкой по контуру: вырезали основу по границам, напечатали карту, смонтировали свет.", sizes: ["Свой"], mats: ["Композит", "Акрил"], price: 300 },
+  { cat: "Наши работы", intro: true, items: [
+    { name: "Карта области с подсветкой", sub: "Стенд по контуру, свет по краю", photo: "img/works/karta.webp", work: true,
+      desc: "Вырезали основу по границам Омской области, напечатали карту и смонтировали подсветку. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "Комплект для поликлиники", sub: "Мнемосхема и тактильные таблички", photo: "img/works/poliklinika.webp", work: true,
+      desc: "Тактильная мнемосхема и таблички на кабинеты для детской стоматологической поликлиники. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "Стенды и таблички для ТСЖ", sub: "Информация, этажи, квартиры", photo: "img/works/tszh.webp", work: true,
+      desc: "Информационный стенд с карманами и таблички этажей с номерами квартир для ТСЖ. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "Таблички подъездов", sub: "Серия на весь дом", photo: "img/works/podezdy.webp", work: true,
+      desc: "Таблички подъездов с номерами квартир по этажам, с логотипом жилого комплекса. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "План эвакуации", sub: "Светонакопительный, по ГОСТ", photo: "img/works/evac.webp", work: true,
+      desc: "План эвакуации для объекта дорожного сервиса: светится в темноте, оформлен по ГОСТ. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "Таблички для офиса и кассы", sub: "Под золото и серебро, знаки", photo: "img/works/ofis.webp", work: true,
+      desc: "Касса, домофон, видеонаблюдение и запрещающие знаки в одном стиле. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "Фигурные адресные", sub: "Вырезаны по контуру", photo: "img/works/figurnye.webp", work: true,
+      desc: "Адресные таблички фигурной формы: улица и номер дома, белые буквы на синем. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
+    { name: "Адресные с корпусом", sub: "Серия на жилой комплекс", photo: "img/works/korpus.webp", work: true,
+      desc: "Адресные таблички с отдельным блоком для номера дома и корпуса. Сделаем так же под ваш объект.", sizes: ["Как на фото", "Свой"], mats: [], price: 300 },
   ]},
 ];
 const CUSTOM = { name: "Своя задача", sub: "", art: "custom", desc: "Опишите, что нужно получить. Подскажем материал, размер и подготовим макет.", sizes: [], mats: [], price: 300 };
@@ -310,7 +330,7 @@ const ART = {
   nosmoke: plate(50, 50, 100, 100, "#fff", `<rect x="72" y="96" width="50" height="10" fill="#22262b"/><rect x="122" y="96" width="8" height="10" fill="#e07b28"/><circle cx="100" cy="100" r="36" fill="none" stroke="#d42d24" stroke-width="9"/><path d="M75 75l50 50" stroke="#d42d24" stroke-width="9"/>`, 4),
   video: plate(30, 55, 140, 90, "url(#gYellow)", `<rect x="58" y="76" width="44" height="26" rx="4" fill="#1c1c1c"/><path d="M102 84l16-8v26l-16-8z" fill="#1c1c1c"/><rect x="74" y="102" width="6" height="12" fill="#1c1c1c"/>${T(100, 126, 10, "ВЕДЁТСЯ", "#1c1c1c", 700, "Manrope")}${T(100, 139, 10, "ВИДЕОНАБЛЮДЕНИЕ", "#1c1c1c", 700, "Manrope")}`, 6),
   rules: plate(25, 40, 150, 120, "url(#gGreen)", `${T(100, 66, 13, "ПРАВИЛА", "#fff")}${[0, 1, 2, 3, 4].map(i => `<circle cx="44" cy="${84 + i * 15}" r="3" fill="#fff"/><rect x="54" y="${81 + i * 15}" width="${100 - i * 9}" height="5" rx="2.5" fill="#fff" opacity=".85"/>`).join("")}`, 6),
-  dog: plate(30, 50, 140, 100, "url(#gYellow)", `<path d="M86 97V77l2-15 9 11h7l14 6 3 6-3 3h-14l-4 9z" fill="#1c1c1c"/><circle cx="101" cy="78" r="1.6" fill="#f5c84a"/>${T(100, 116, 11, "ОСТОРОЖНО", "#1c1c1c")}${T(100, 136, 11, "ЗЛАЯ СОБАКА", "#1c1c1c")}`, 6),
+  dog: plate(28, 50, 144, 100, "url(#gYellow)", `<clipPath id="cDog"><rect x="28" y="50" width="144" height="100" rx="6"/></clipPath><image href="img/dog-shepherd.webp" x="30" y="52" width="62" height="98" preserveAspectRatio="xMidYMax meet" clip-path="url(#cDog)"/>${T(132, 82, 8, "ОСТОРОЖНО", "#1c1c1c")}${T(132, 108, 15, "ЗЛАЯ", "#1c1c1c")}${T(132, 129, 12, "СОБАКА", "#1c1c1c")}`, 6),
   private: plate(30, 55, 140, 90, "#fff", `<rect x="30" y="55" width="140" height="22" fill="#d42d24"/>${T(100, 71, 11, "ВНИМАНИЕ", "#fff")}${T(100, 104, 13, "ЧАСТНАЯ", "#d42d24")}${T(100, 126, 13, "ТЕРРИТОРИЯ", "#d42d24")}`, 6),
   noparking: plate(40, 45, 120, 110, "url(#gBlue)", `<circle cx="100" cy="88" r="30" fill="#fff"/>${T(100, 101, 34, "P", "#1f5fbf")}<path d="M79 67l42 42" stroke="#d42d24" stroke-width="7"/>${T(100, 140, 11, "НЕ ПАРКОВАТЬСЯ", "#fff", 700, "Manrope")}`, 8),
   acrylic: `<g filter="url(#sh)"><rect x="30" y="55" width="140" height="90" rx="6" fill="rgba(210,235,255,.18)" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
@@ -345,10 +365,11 @@ function render() {
   tabsEl.innerHTML = cats.map((c, i) => `<button class="tab ${i ? "" : "on"}" data-c="${c}">${c}</button>`).join("");
   listEl.innerHTML = CATALOG.map((c, ci) => `
     <section data-cat="${c.cat}">
-      <div class="section-title"><h2>${c.cat}</h2><span>${c.items.length}</span></div>
+      <div class="section-title"><h2>${c.cat}</h2><span>${c.items.length}</span></div>${c.intro ? `
+      <div class="years"><b>35</b><div><strong>лет опыта</strong><p>35 лет делаем таблички, знаки и стенды в Омске. Ниже часть наших работ: всё изготовлено в собственном цеху.</p></div></div>` : ""}
       <div class="grid">${c.items.map((it, ii) => `
         <button class="card" onclick="openSheet(CATALOG[${ci}].items[${ii}])">
-          <div class="ph">${it.tag ? `<span class="tag">${it.tag}</span>` : ""}${visual(it)}</div>
+          <div class="ph${it.work ? " work" : ""}">${it.tag ? `<span class="tag">${it.tag}</span>` : ""}${visual(it)}</div>
           <div class="info"><div class="name">${it.name}</div><div class="sub">${it.sub}</div></div>
         </button>`).join("")}</div>
     </section>`).join("");
